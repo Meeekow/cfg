@@ -11,8 +11,14 @@ nnoremap <silent> <leader>rr :noh<cr>
 " shortcut to yank all lines to sys clipboard; Space + yy
 nnoremap <silent> <leader>yy :%y+<cr>
 
+" ctrl + d + zz
+nnoremap <silent> <C-d> <C-d>zz
+
+" ctrl + u + zz
+nnoremap <silent> <C-u> <C-u>zz
+
 " nvim behavior
-set tabstop=4 softtabstop=4 shiftwidth=4
+set tabstop=2 softtabstop=2 shiftwidth=2
 set expandtab smarttab autoindent
 set incsearch ignorecase smartcase hlsearch
 set encoding=utf-8
