@@ -5,6 +5,9 @@ let mapleader = " "
 " shortcut to yank current line and feed yanked line to <C-R> + 0; Space + yr
 nnoremap <leader>yr yy/<c-r>0<cr>
 
+" shortcut to access 0 register
+nnoremap <silent> <leader>p "0p
+
 " shortcut to remove highlight from search; Space + rr
 nnoremap <silent> <leader>rr :noh<cr>
 
