@@ -1,6 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# and in the NixOS manual (accessible by running `nixos-help`).
 
 { config, pkgs, ... }:
 
@@ -21,6 +21,7 @@
 
   # Set your time zone.
   time.timeZone = "Asia/Manila";
+  networking.timeServers = [ "time.google.com" ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -34,16 +35,9 @@
   #   useXkbConfig = true; # use xkbOptions in tty.
   # };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  
   # Configure keymap in X11
   services.xserver.layout = "us";
-  # services.xserver.xkbOptions = {
-  #   "eurosign:e";
-  #   "caps:escape" # map caps to escape.
-  # };
+  # services.xserver.xkbOptions = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -57,25 +51,25 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.meredith = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      firefox
-      kitty
-      qbittorrent
-      unzip
-      vlc
-      wget
-      xclip
-    ];
-    initialPassword = "pass";
+     isNormalUser = true;
+     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+     packages = with pkgs; [
+       firefox
+       gimp
+       gnome.dconf-editor
+       kitty
+       qbittorrent
+       vlc
+       xclip
+     ];
+     initialPassword = "pass";
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    git
-    vim
+     git
+     wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -95,7 +89,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -104,15 +98,13 @@
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # on your system were taken. It's perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
 
-  # My Config
-
-  # Boot
+  # Boot Options
   boot.loader.timeout = 10;
   boot.loader.systemd-boot.configurationLimit = 5;
 
@@ -126,9 +118,19 @@
   # Enable mounting of NTFS
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # Gnome DE
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # Enable the X11 windowing system.
+  # services.xserver.enable = true;
+
+  # Enable Gnome DE
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+
+  services.xserver = {
+    enable = true;
+    videoDrivers = [ "nvidia" ];
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
 
   # Exclude some packages from Gnome
   environment.gnome.excludePackages = (with pkgs; [
@@ -167,28 +169,17 @@
     xterm
   ]);
 
-  # Bash
-  programs.bash.shellAliases = {
-    l = "ls -ahl --color=tty";
-    v = "nvim";
-    nv = "sudo nvim";
-    cls = "history -c && history -w";
-    mkdir = "mkdir -p";
-
-    gs = "git status";
-  };
-
-  # Nvidia
+  # Nvidia Config
   nixpkgs.config.allowUnfree = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
 
   # Neovim
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
     configure = {
       customRC = ''
-        set tabstop=4 softtabstop=4 shiftwidth=4
+        set tabstop=2 softtabstop=2 shiftwidth=2
         set expandtab smarttab autoindent
         set number
         set relativenumber
@@ -201,5 +192,15 @@
     };
   };
 
+  # Bash
+  programs.bash.shellAliases = {
+    l = "ls -ahl --color=tty";
+    v = "nvim";
+    nv = "sudo nvim";
+    cls = "history -c && history -w";
+    mkdir = "mkdir -p";
+
+    gs = "git status";
+  };
 }
 
