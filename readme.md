@@ -24,6 +24,26 @@
 
 <br>
 
+# Amend Commit Message
+1. Change n to how many commits back you wish to change
+    ```
+    git rebase -i HEAD~n
+    ```
+2. Replace pick with reword before each commit message you want to change
+
+3. Save and close the commit list file
+
+4. In each resulting commit file, type the new commit message, save the file, and close it
+
+5. Push your changes to remote
+   ```
+    git push --force origin EXAMPLE-BRANCH
+   ```
+
+[Reference](https://stackoverflow.com/questions/37580475/how-to-amend-a-specific-commit-message-in-git)
+
+<br>
+
 # Delete Commit History
 1. #### Remove all history
     ```
