@@ -1,3 +1,29 @@
+# Revert Commit
+1. #### Use the commit id you wish to go back to.
+    ```
+    git reset <commit_id>
+    ```
+
+2. #### Save the changes you wish to commit, add relevant files to being staged and commit
+    ```
+    git status
+    ```
+    ```
+    git add <file(s)>
+    ```
+    ```
+    git commit -m "<commit details>"
+    ```
+
+3. #### Push to remote
+   ```
+    git push --force-with-lease
+   ```
+
+[Reference](https://stackoverflow.com/questions/34519665/how-can-i-move-head-back-to-a-previous-location-detached-head-undo-commits)
+
+<br>
+
 # Delete Commit History
 1. #### Remove all history
     ```
@@ -38,15 +64,6 @@
 
 <br>
 
-# Format USB Stick
-```
-sudo dd bs=4M if=path/to/archcraft.iso of=/dev/sdX status=progress oflag=sync
-```
-
-[Reference](https://wiki.archcraft.io/docs/boot-iso/boot-with-usb)
-
-<br>
-
 # Add Token
 - If you already have the repository cloned locally
 ```
@@ -60,3 +77,11 @@ git push
 git clone https://<TOKEN>@github.com/<REPO-OWNER>/<REPO-NAME>
 ```
 
+<br>
+
+# Format USB Stick
+```
+sudo dd bs=4M if=path/to/archcraft.iso of=/dev/sdX status=progress oflag=sync
+```
+
+[Reference](https://wiki.archcraft.io/docs/boot-iso/boot-with-usb)
